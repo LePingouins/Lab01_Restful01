@@ -1,6 +1,7 @@
 package com.champsoft.Lab01_Restful.StaffManagementSubDomain.presentationlayer;
 
 import com.champsoft.Lab01_Restful.StaffManagementSubDomain.businesslogiclayer.LibrarianServiceImpl;
+import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,10 +35,16 @@ public class LibrarianController {
     }
 
     @PutMapping("/{librarianId}")
-    public ResponseEntity<LibrarianResponseModel> updateLibrarian(@PathVariable String librarianId, @RequestBody LibrarianRequestModel newLibrarianData) {
-        return ResponseEntity.ok().body(librarianServiceImpl.updateLibrarian(librarianId, newLibrarianData));
+    public ResponseEntity<LibrarianResponseModel> updateLibrarian(
+            @PathVariable String librarianId,
+            @RequestBody LibrarianRequestModel newLibrarianData) {
+        try {
+            LibrarianResponseModel response = librarianServiceImpl.updateLibrarian(librarianId, newLibrarianData);
+            return ResponseEntity.ok(response);
+        } catch (NotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
-
     @DeleteMapping("/{librarianId}")
     public ResponseEntity<String> deleteLibrarianById(@PathVariable String librarianId) {
         return ResponseEntity.ok().body(librarianServiceImpl.deleteLibrarianById(librarianId));
