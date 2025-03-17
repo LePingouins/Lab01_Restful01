@@ -6,7 +6,7 @@ import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.datamapperlayer.Bo
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.datamapperlayer.BookResponseMapper;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.presentationlayer.BookRequestModel;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.presentationlayer.BookResponseModel;
-import com.champsoft.Lab01_Restful.loanmanagementsubdomain.dataaccesslayer.book.BookRepository;
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.BookRepository;
 import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class BookServiceImpl implements BookService{
     private final BookResponseMapper bookResponseMapper;
 
     @Autowired
-        public BookServiceImpl(com.champsoft.cardealershipwebapp_v2.loanmanagementsubdomain.dataaccesslayer.book.BookRepository bookRepository, BookRequestMapper bookRequestMapper, BookResponseMapper bookResponseMapper){
+        public BookServiceImpl(BookRepository bookRepository, BookRequestMapper bookRequestMapper, BookResponseMapper bookResponseMapper){
         this.bookRepository = bookRepository;
         this.bookRequestMapper = bookRequestMapper;
         this.bookResponseMapper = bookResponseMapper;
