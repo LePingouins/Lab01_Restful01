@@ -11,11 +11,6 @@ INSERT INTO fines (fine_id, amount, reason, status) VALUES
           ('234e5678-f90c-23d4-b567-667753551111', 250.00, 'Parking violation', 'Paid'),
           ('345e6789-g01d-34e5-c678-778864662222', 75.25, 'Overdue payment', 'Pending');
 
-INSERT INTO librarians (librarian_id, first_name, last_name, email, salary) VALUES
-                              ('123e4567-e89b-12d3-a456-556642440000', 'Alice', 'Johnson', 'alice.johnson@example.com', 45000.00),
-                              ('234e5678-f90c-23d4-b567-667753551111', 'Bob', 'Smith', 'bob.smith@example.com', 50000.00),
-                              ('345e6789-g01d-34e5-c678-778864662222', 'Charlie', 'Brown', 'charlie.brown@example.com', 48000.00);
-
 
 -- Insert data into loans table
 INSERT INTO loans (loan_id, issue_date, due_date, status)
@@ -36,8 +31,3 @@ VALUES
 
 
 
--- Insérer des données dans la table libraries
-INSERT INTO libraries (library_id, name, address, max_capacity) VALUES
-                                                                    ('123e4567-e89b-12d3-a456-556642440000', 'Central Library', '123 Main St, Cityville', 500),
-                                                                    ('234e5678-f90c-23d4-b567-667753551111', 'Westside Library', '456 West St, Townsville', 300),
-                                                                    ('345e6789-g01d-34e5-c678-778864662222', 'East End Library', '789 East St, Villecity', 200);

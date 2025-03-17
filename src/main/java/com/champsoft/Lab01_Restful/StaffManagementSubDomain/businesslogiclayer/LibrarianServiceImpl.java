@@ -1,6 +1,6 @@
 package com.champsoft.Lab01_Restful.StaffManagementSubDomain.businesslogiclayer;
 
-import com.champsoft.Lab01_Restful.StaffManagementSubDomain.businesslogiclayer.LibrarianService;
+import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.dataaccesslayer.LibraryIdentifier;
 import com.champsoft.Lab01_Restful.StaffManagementSubDomain.dataaccesslayer.Librarian;
 import com.champsoft.Lab01_Restful.StaffManagementSubDomain.dataaccesslayer.LibrarianIdentifier;
 import com.champsoft.Lab01_Restful.StaffManagementSubDomain.dataaccesslayer.LibrarianRepository;
@@ -19,6 +19,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class LibrarianServiceImpl implements LibrarianService {
+
     private final LibrarianRepository librarianRepository;
     private final LibrarianRequestMapper librarianRequestMapper;
     private final LibrarianResponseMapper librarianResponseMapper;
@@ -89,5 +90,12 @@ public class LibrarianServiceImpl implements LibrarianService {
         }
         this.librarianRepository.delete(foundLibrarian);
         return "Librarian with id: " + librarianId + " deleted successfully.";
+    }
+
+    // Méthode pour obtenir tous les bibliothécaires d'une bibliothèque donnée
+    public List<LibrarianResponseModel> getLibrariansByLibrary(String libraryId) {
+        LibraryIdentifier libraryIdentifier = new LibraryIdentifier(libraryId);
+        List<Librarian> librarians = librarianRepository.findByLibrary_LibraryIdentifier(libraryIdentifier);
+        return librarianResponseMapper.entityListToResponseModelList(librarians);
     }
 }

@@ -42,4 +42,11 @@ public class LibrarianController {
     public ResponseEntity<String> deleteLibrarianById(@PathVariable String librarianId) {
         return ResponseEntity.ok().body(librarianServiceImpl.deleteLibrarianById(librarianId));
     }
+
+    // Endpoint to get all librarians of a specific library
+    @GetMapping("/library/{libraryId}")
+    public ResponseEntity<List<LibrarianResponseModel>> getLibrariansByLibrary(@PathVariable String libraryId) {
+        List<LibrarianResponseModel> librarians = librarianServiceImpl.getLibrariansByLibrary(libraryId);
+        return ResponseEntity.ok().body(librarians);
+    }
 }

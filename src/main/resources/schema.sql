@@ -22,16 +22,6 @@ CREATE TABLE fines (
 );
 
 
-DROP TABLE IF EXISTS librarians;
-
-CREATE TABLE librarians (
-                            id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                            librarian_id VARCHAR(255) NOT NULL,
-                            first_name VARCHAR(255) NOT NULL,
-                            last_name VARCHAR(255) NOT NULL,
-                            email VARCHAR(255) UNIQUE NOT NULL,
-                            salary DOUBLE NOT NULL
-);
 
 
 -- Drop the loans table if it exists
@@ -64,15 +54,38 @@ CREATE TABLE IF NOT EXISTS members (
 );
 
 
+-- Créer la table libraries avec un index unique sur library_id
 DROP TABLE IF EXISTS libraries;
 
--- Créer la table pour les bibliothèques
 CREATE TABLE libraries (
                            id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                           library_id VARCHAR(255) NOT NULL,
+                           library_id VARCHAR(255) NOT NULL UNIQUE, -- Assurez-vous que library_id est un VARCHAR
                            name VARCHAR(255) NOT NULL,
                            address VARCHAR(255),
                            max_capacity INTEGER NOT NULL
 );
 
+-- Insérer des bibliothèques avec des identifiants uniques
+INSERT INTO libraries (library_id, name, address, max_capacity) VALUES
+                                                                    ('123e4567-e89b-12d3-a456-556642440000', 'Central Library', '123 Main St, Cityville', 500),
+                                                                    ('234e5678-f90c-23d4-b567-667753551111', 'Westside Library', '456 West St, Townsville', 300),
+                                                                    ('345e6789-g01d-34e5-c678-778864662222', 'East End Library', '789 East St, Villecity', 200);
 
+DROP TABLE IF EXISTS librarians;
+
+CREATE TABLE librarians (
+                            id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                            librarian_id VARCHAR(255) NOT NULL,
+                            first_name VARCHAR(255) NOT NULL,
+                            last_name VARCHAR(255) NOT NULL,
+                            email VARCHAR(255) UNIQUE NOT NULL,
+                            salary DOUBLE NOT NULL,
+                            library_id VARCHAR(255) NOT NULL, -- Foreign key to library
+                            FOREIGN KEY (library_id) REFERENCES libraries(library_id) -- Référence vers la table libraries
+);
+
+-- Insérer des bibliothécaires avec la relation vers les bibliothèques
+INSERT INTO librarians (librarian_id, first_name, last_name, email, salary, library_id) VALUES
+                                                                                            ('123e4567-e89b-12d3-a456-556642440000', 'Alice', 'Johnson', 'alice.johnson@example.com', 45000.00, '123e4567-e89b-12d3-a456-556642440000'),
+                                                                                            ('234e5678-f90c-23d4-b567-667753551111', 'Bob', 'Smith', 'bob.smith@example.com', 50000.00, '234e5678-f90c-23d4-b567-667753551111'),
+                                                                                            ('345e6789-g01d-34e5-c678-778864662222', 'Charlie', 'Brown', 'charlie.brown@example.com', 48000.00, '345e6789-g01d-34e5-c678-778864662222');

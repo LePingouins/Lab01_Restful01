@@ -18,6 +18,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class LibraryServiceImpl implements LibraryService {
+
     private final LibraryRepository libraryRepository;
     private final LibraryRequestMapper libraryRequestMapper;
     private final LibraryResponseMapper libraryResponseMapper;
