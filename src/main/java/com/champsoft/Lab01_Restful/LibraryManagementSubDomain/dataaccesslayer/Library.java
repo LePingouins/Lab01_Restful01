@@ -13,19 +13,18 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Library {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // Identifiant privé unique pour chaque bibliothèque
+    private Integer id;
 
     @Embedded
-    private LibraryIdentifier libraryIdentifier; // Identifiant public de la bibliothèque (UUID)
+    private LibraryIdentifier libraryIdentifier;
 
-    private String name;      // Nom de la bibliothèque
-    private String address;   // Adresse de la bibliothèque
-    private Integer maxCapacity;  // Capacité maximale de la bibliothèque
+    private String name;
+    private String address;
+    private Integer maxCapacity;
 
-    // Relation One-to-Many avec Librarian
-    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
+    // Change to EAGER fetching
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Librarian> librarians;
 }

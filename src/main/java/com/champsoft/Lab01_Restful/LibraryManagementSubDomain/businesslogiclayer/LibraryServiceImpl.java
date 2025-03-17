@@ -9,8 +9,10 @@ import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.
 import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.LibraryResponseModel;
 import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,12 +31,20 @@ public class LibraryServiceImpl implements LibraryService {
         this.libraryRequestMapper = libraryRequestMapper;
         this.libraryResponseMapper = libraryResponseMapper;
     }
+    @Transactional
+    public List<LibraryResponseModel> getAllLibraries() {
+        List<Library> libraries = libraryRepository.findAll();
+        for (Library library : libraries) {
+            Hibernate.initialize(library.getLibrarians()); // Initialize the collection
+        }
+        return libraryResponseMapper.entityListToResponseModelList(libraries);
+    }
 
-    @Override
+    /*@Override
     public List<LibraryResponseModel> getAllLibraries() {
         List<Library> libraries = libraryRepository.findAll();
         return libraryResponseMapper.entityListToResponseModelList(libraries);
-    }
+    }*/
 
     @Override
     public LibraryResponseModel getLibraryById(String libraryId) {

@@ -25,7 +25,13 @@ public class LibraryController {
     // Endpoint to get all libraries
     @GetMapping
     public ResponseEntity<List<LibraryResponseModel>> getAllLibraries() {
-        return ResponseEntity.ok().body(libraryServiceImpl.getAllLibraries());
+        try {
+            List<LibraryResponseModel> libraries = libraryServiceImpl.getAllLibraries();
+            return ResponseEntity.ok().body(libraries);
+        } catch (Exception e) {
+            // Log the exception (optional)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     // Endpoint to get a specific library by its ID

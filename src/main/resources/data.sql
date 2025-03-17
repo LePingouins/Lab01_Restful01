@@ -30,4 +30,3 @@ VALUES
     ('2b9c7b3f-df5a-4e0c-b827-82cf7b4d389d', 'Jane', 'Doe', 'jane.doe@example.com', 'premium', '456 Oak Avenue', 'Vancouver', 'British Columbia', 'Canada');
 
 
-

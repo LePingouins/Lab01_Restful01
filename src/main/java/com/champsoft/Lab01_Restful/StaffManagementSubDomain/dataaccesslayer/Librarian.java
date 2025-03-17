@@ -15,18 +15,21 @@ public class Librarian {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id; // Private identifier
+    private Integer id;
 
     @Embedded
-    private LibrarianIdentifier librarianIdentifier; // Embedded as a value object
+    private LibrarianIdentifier librarianIdentifier;
 
     private String firstName;
     private String lastName;
     private String email;
     private Double salary;
 
-    // Relation Many-to-One avec Library
+    // Ensure this matches the database type
+    @Column(name = "library_id")
+    private String libraryId; // This should be a String if library_id is VARCHAR in the database
+
     @ManyToOne
-    @JoinColumn(name = "library_id", nullable = false) // Clé étrangère vers Library
-    private Library library;
+    @JoinColumn(name = "library_id", referencedColumnName = "library_id", insertable = false, updatable = false)
+    private Library library; // This should be the only mapping for library_id
 }
