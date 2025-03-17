@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS members (
                                        membership_type VARCHAR(255) NOT NULL, -- Type d'adhésion du membre (ex: standard, premium)
 
     -- Attributs d'adresse directement dans la table members
-                                       street_address VARCHAR(255),           -- Rue
+                                       street VARCHAR(255),           -- Rue
                                        city VARCHAR(255),                     -- Ville
                                        province VARCHAR(255),                 -- Province
                                        country VARCHAR(255)                -- Pays
