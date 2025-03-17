@@ -6,10 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
-   Book findByBookIdentifier_BookId(BookIdentifier bookId);
-
-
-
-   // Trouver un livre par son ID
-   Book findByBookIdentifier_BookId(String bookId);
+   Book findByBookIdentifier_BookId(String bookId); // Method to find by bookId
+   void deleteByBookIdentifier_BookId(String bookId);
 }

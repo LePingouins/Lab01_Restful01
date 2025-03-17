@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -100,10 +99,9 @@ public class BookServiceImpl implements BookService{
     public String deleteBookbyId(String bookId){
 
         // Crée un BookIdentifier à partir du bookId
-        BookIdentifier bookIdentifier = new BookIdentifier(bookId);
 
         // Recherche du livre
-        Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookIdentifier);
+        Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookId);
 
         if (foundBook == null){
             return "Book with id: " + bookId + " not found.";

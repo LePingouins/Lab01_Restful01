@@ -15,4 +15,5 @@ public interface BookService {
     BookResponseModel updateBook(String bookId, BookRequestModel newBookData);
 
     String deleteBookbyId(String bookId);
+
 }
