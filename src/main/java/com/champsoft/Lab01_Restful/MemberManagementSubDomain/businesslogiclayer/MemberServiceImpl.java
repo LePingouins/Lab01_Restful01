@@ -40,7 +40,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public MemberResponseModel getMemberById(String memberId) {
-        Member member = this.memberRepository.findMemberByMemberIdentifier(memberId);
+        // Use the method that accepts a String
+        Member member = this.memberRepository.findMemberByMemberId(memberId);
         if (member == null) {
             throw new NotFoundException("Member with id: " + memberId + " not found.");
         }
