@@ -29,7 +29,7 @@ public class Librarian {
     @Column(name = "library_id")
     private String libraryId; // This should be a String if library_id is VARCHAR in the database
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "library_id", referencedColumnName = "library_id", insertable = false, updatable = false)
     private Library library; // This should be the only mapping for library_id
 }

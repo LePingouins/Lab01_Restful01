@@ -68,18 +68,23 @@ public class LibrarianServiceImpl implements LibrarianService {
     @Override
     public LibrarianResponseModel updateLibrarian(String librarianId, LibrarianRequestModel newLibrarianData) {
         LibrarianIdentifier librarianIdentifier = new LibrarianIdentifier(librarianId);
+
+        // Vérifier si le bibliothécaire existe sans utiliser orElseThrow()
         Librarian foundLibrarian = this.librarianRepository.findLibrarianByLibrarianIdentifier(librarianIdentifier);
         if (foundLibrarian == null) {
             throw new NotFoundException("Librarian with id: " + librarianId + " not found.");
         }
 
-        Librarian librarian = this.librarianRequestMapper.requestModelToEntity(newLibrarianData);
-        librarian.setLibrarianIdentifier(librarianIdentifier);
-        librarian.setId(foundLibrarian.getId());
+        // Mise à jour des champs sans recréer l'objet
+        foundLibrarian.setFirstName(newLibrarianData.getFirstName());
+        foundLibrarian.setLastName(newLibrarianData.getLastName());
+        foundLibrarian.setEmail(newLibrarianData.getEmail());
+        foundLibrarian.setSalary(newLibrarianData.getSalary());
 
-        Librarian savedLibrarian = this.librarianRepository.save(librarian);
+        Librarian savedLibrarian = this.librarianRepository.save(foundLibrarian);
         return this.librarianResponseMapper.entityToResponseModel(savedLibrarian);
     }
+
 
     @Override
     public String deleteLibrarianById(String librarianId) {
