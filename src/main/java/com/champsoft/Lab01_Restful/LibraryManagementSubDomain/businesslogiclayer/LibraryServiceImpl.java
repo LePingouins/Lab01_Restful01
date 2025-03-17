@@ -7,6 +7,8 @@ import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.datamapperlayer.Li
 import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.datamapperlayer.LibraryResponseMapper;
 import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.LibraryRequestModel;
 import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.LibraryResponseModel;
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.Book;
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.BookRepository;
 import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Hibernate;
@@ -22,29 +24,28 @@ import java.util.UUID;
 public class LibraryServiceImpl implements LibraryService {
 
     private final LibraryRepository libraryRepository;
+    private final BookRepository bookRepository;
     private final LibraryRequestMapper libraryRequestMapper;
     private final LibraryResponseMapper libraryResponseMapper;
 
     @Autowired
-    public LibraryServiceImpl(LibraryRepository libraryRepository, LibraryRequestMapper libraryRequestMapper, LibraryResponseMapper libraryResponseMapper) {
+    public LibraryServiceImpl(LibraryRepository libraryRepository, BookRepository bookRepository,
+                              LibraryRequestMapper libraryRequestMapper, LibraryResponseMapper libraryResponseMapper) {
         this.libraryRepository = libraryRepository;
+        this.bookRepository = bookRepository;
         this.libraryRequestMapper = libraryRequestMapper;
         this.libraryResponseMapper = libraryResponseMapper;
     }
+
     @Transactional
     public List<LibraryResponseModel> getAllLibraries() {
         List<Library> libraries = libraryRepository.findAll();
         for (Library library : libraries) {
-            Hibernate.initialize(library.getLibrarians()); // Initialize the collection
+            Hibernate.initialize(library.getLibrarians()); // Initialize the librarians
+            Hibernate.initialize(library.getBooks()); // Initialize the books
         }
         return libraryResponseMapper.entityListToResponseModelList(libraries);
     }
-
-    /*@Override
-    public List<LibraryResponseModel> getAllLibraries() {
-        List<Library> libraries = libraryRepository.findAll();
-        return libraryResponseMapper.entityListToResponseModelList(libraries);
-    }*/
 
     @Override
     public LibraryResponseModel getLibraryById(String libraryId) {
@@ -53,6 +54,9 @@ public class LibraryServiceImpl implements LibraryService {
         if (library == null) {
             throw new NotFoundException("Library with id: " + libraryId + " not found.");
         }
+        // Initialize books and librarians before returning
+        Hibernate.initialize(library.getLibrarians());
+        Hibernate.initialize(library.getBooks());
         return this.libraryResponseMapper.entityToResponseModel(library);
     }
 
@@ -70,6 +74,8 @@ public class LibraryServiceImpl implements LibraryService {
 
         Library library = this.libraryRequestMapper.requestModelToEntity(newLibraryData);
         library.setLibraryIdentifier(libraryIdentifier);
+
+        // Save the library to the repository
         Library savedLibrary = this.libraryRepository.save(library);
         return this.libraryResponseMapper.entityToResponseModel(savedLibrary);
     }

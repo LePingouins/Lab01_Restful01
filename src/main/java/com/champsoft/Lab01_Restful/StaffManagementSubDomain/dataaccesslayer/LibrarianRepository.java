@@ -11,4 +11,10 @@ public interface LibrarianRepository extends JpaRepository<Librarian, Integer> {
 
     // Recherche des bibliothécaires par l'identifiant de la bibliothèque associée
     List<Librarian> findByLibrary_LibraryIdentifier(LibraryIdentifier libraryIdentifier);
+
+    Librarian findLibrarianByLibrarianIdentifier(String librarianIdentifier);
+
+    List<Librarian> findByLibrary_LibraryIdentifier(String libraryIdentifier);
+
+
 }
