@@ -5,19 +5,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class BookResponseModel {
-     String bookId;
-     String title;
-     String author;
-     String genre;
-     String isbn;
-     int copyAvailable;
-
-
+     private String bookId;
+     private String title;
+     private String author;
+     private String genre;
+     private String isbn;
+     private int copyAvailable;
+     private String libraryId; // Identifiant de la bibliothèque associée
 }

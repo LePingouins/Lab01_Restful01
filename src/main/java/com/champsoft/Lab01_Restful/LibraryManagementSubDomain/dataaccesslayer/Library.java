@@ -1,5 +1,6 @@
 package com.champsoft.Lab01_Restful.LibraryManagementSubDomain.dataaccesslayer;
 
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.Book;
 import com.champsoft.Lab01_Restful.StaffManagementSubDomain.dataaccesslayer.Librarian;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,11 @@ public class Library {
     private String address;
     private Integer maxCapacity;
 
-    // Change to EAGER fetching
+    // Relation One-to-Many avec Book
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Book> books;  // Ajout de la relation avec les livres
+
+    // Relation One-to-Many avec Librarian
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Librarian> librarians;
 }

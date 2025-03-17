@@ -9,9 +9,12 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface BookResponseMapper {
+
     @Mapping(expression = "java(book.getBookIdentifier().getBookId())", target = "bookId")
+    @Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId") // Ajouter la relation Library
     BookResponseModel entityToResponseModel(Book book);
 
     @Mapping(expression = "java(book.getBookIdentifier().getBookId())", target = "bookId")
+    @Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId")
     List<BookResponseModel> entityListToResponseModelList(List<Book> books);
 }

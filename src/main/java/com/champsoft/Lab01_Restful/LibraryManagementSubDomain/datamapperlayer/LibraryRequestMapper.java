@@ -8,6 +8,6 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface LibraryRequestMapper {
 
-    @Mapping(target = "libraryIdentifier.libraryId", source = "libraryId") // Ajout du mapping pour lier le `libraryId`
+    @Mapping(target = "libraryIdentifier.libraryId", source = "libraryId") // Lier `libraryId` avec `libraryIdentifier`
     Library requestModelToEntity(LibraryRequestModel libraryRequestModel);
 }

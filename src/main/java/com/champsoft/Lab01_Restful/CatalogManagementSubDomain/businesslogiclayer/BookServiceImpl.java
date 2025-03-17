@@ -2,11 +2,12 @@ package com.champsoft.Lab01_Restful.CatalogManagementSubDomain.businesslogiclaye
 
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.Book;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.BookIdentifier;
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.BookRepository;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.datamapperlayer.BookRequestMapper;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.datamapperlayer.BookResponseMapper;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.presentationlayer.BookRequestModel;
 import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.presentationlayer.BookResponseModel;
-import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.BookRepository;
+import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.dataaccesslayer.Library;
 import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,14 +17,14 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final BookRequestMapper bookRequestMapper;
     private final BookResponseMapper bookResponseMapper;
 
     @Autowired
-        public BookServiceImpl(BookRepository bookRepository, BookRequestMapper bookRequestMapper, BookResponseMapper bookResponseMapper){
+    public BookServiceImpl(BookRepository bookRepository, BookRequestMapper bookRequestMapper, BookResponseMapper bookResponseMapper) {
         this.bookRepository = bookRepository;
         this.bookRequestMapper = bookRequestMapper;
         this.bookResponseMapper = bookResponseMapper;
@@ -69,6 +70,10 @@ public class BookServiceImpl implements BookService{
         BookIdentifier bookIdentifier = new BookIdentifier(); // This will generate a new UUID
         newBook.setBookIdentifier(bookIdentifier); // Assuming your Book entity has a setBookIdentifier method
 
+        // Set the library relationship
+        Library library = new Library();  // Ideally, you'd retrieve the library from the database based on the libraryId
+        newBook.setLibrary(library);
+
         // Save the book to the repository
         Book savedBook = this.bookRepository.save(newBook);
 
@@ -99,7 +104,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public String deleteBookbyId(String bookId){
+    public String deleteBookbyId(String bookId) {
 
         // Crée un BookIdentifier à partir du bookId
         BookIdentifier bookIdentifier = new BookIdentifier(bookId);
@@ -107,7 +112,7 @@ public class BookServiceImpl implements BookService{
         // Recherche du livre
         Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookId);
 
-        if (foundBook == null){
+        if (foundBook == null) {
             return "Book with id: " + bookId + " not found.";
         } else {
             this.bookRepository.delete(foundBook);
