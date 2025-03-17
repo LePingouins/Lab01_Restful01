@@ -23,10 +23,6 @@ public class Book {
     private String author;
     private String genre;
     private String isbn;
-    private int copieAvailable;
-
-
-
-
-
+    @Column(name = "copy_available")
+    private int copyAvailable;
 }

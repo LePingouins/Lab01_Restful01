@@ -30,8 +30,11 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public List<BookResponseModel> getAllBooks(){
+    public List<BookResponseModel> getAllBooks() {
+        // Retrieve all books from the repository
         List<Book> books = bookRepository.findAll();
+
+        // Convert the list of Book entities to BookResponseModel
         return bookResponseMapper.entityListToResponseModelList(books);
     }
 
@@ -60,7 +63,7 @@ public class BookServiceImpl implements BookService{
         newBook.setAuthor(newBookData.getAuthor());
         newBook.setGenre(newBookData.getGenre());
         newBook.setIsbn(newBookData.getIsbn()); // Set the ISBN
-        newBook.setCopieAvailable(newBookData.getCopyAvailable());
+        newBook.setCopyAvailable(newBookData.getCopyAvailable());
 
         // Create a new BookIdentifier and set it in the Book entity
         BookIdentifier bookIdentifier = new BookIdentifier(); // This will generate a new UUID
@@ -86,7 +89,7 @@ public class BookServiceImpl implements BookService{
         existingBook.setAuthor(updatedBookData.getAuthor());
         existingBook.setGenre(updatedBookData.getGenre());
         existingBook.setIsbn(updatedBookData.getIsbn());
-        existingBook.setCopieAvailable(updatedBookData.getCopyAvailable());
+        existingBook.setCopyAvailable(updatedBookData.getCopyAvailable());
 
         // Save the updated book to the repository
         Book savedBook = this.bookRepository.save(existingBook);
@@ -99,6 +102,7 @@ public class BookServiceImpl implements BookService{
     public String deleteBookbyId(String bookId){
 
         // Crée un BookIdentifier à partir du bookId
+        BookIdentifier bookIdentifier = new BookIdentifier(bookId);
 
         // Recherche du livre
         Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookId);

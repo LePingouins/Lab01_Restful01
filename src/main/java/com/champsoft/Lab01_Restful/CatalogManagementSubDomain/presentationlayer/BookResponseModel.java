@@ -17,7 +17,7 @@ public class BookResponseModel {
      String author;
      String genre;
      String isbn;
-     int copieAvailable;
+     int copyAvailable;
 
 
 }

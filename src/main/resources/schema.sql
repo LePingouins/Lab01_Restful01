@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS books (
                                      author VARCHAR(255) NOT NULL,
                                      genre VARCHAR(100) NOT NULL,
                                      isbn VARCHAR(13) NOT NULL,
-                                     copie_available INT NOT NULL
+                                     copy_available INT NOT NULL
 );
 
 

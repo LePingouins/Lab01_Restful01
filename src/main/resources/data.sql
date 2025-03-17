@@ -1,5 +1,5 @@
 -- Insertion des livres
-INSERT INTO books (book_id, title, author, genre, isbn, copie_available)
+INSERT INTO books (book_id, title, author, genre, isbn, copy_available)
 VALUES
     ('123e4567-e89b-12d3-a456-556642440000', 'The Catcher in the Rye', 'J.D. Salinger', 'Fiction', '9780316769488', 10),
     ('234e5678-f90c-23d4-b567-667753551111', '1984', 'George Orwell', 'Dystopian', '9780451524935', 5),
