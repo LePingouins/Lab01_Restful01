@@ -65,4 +65,15 @@ CREATE TABLE IF NOT EXISTS members (
 );
 
 
+DROP TABLE IF EXISTS libraries;
+
+-- Créer la table pour les bibliothèques
+CREATE TABLE libraries (
+                           id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                           library_id VARCHAR(255) NOT NULL,
+                           name VARCHAR(255) NOT NULL,
+                           address VARCHAR(255),
+                           max_capacity INTEGER NOT NULL
+);
+
 

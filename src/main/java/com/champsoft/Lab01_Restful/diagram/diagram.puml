@@ -16,7 +16,7 @@ skinparam rectangle {
 
 Package "Library Management (Aggregate Root)" <<Rectangle>> #FFEB3B {
     AGGREGATE_ROOT(Library) #lightpink {
-        libraryId: UUID
+
         name: String
         address: String
         maxCapacity: Integer

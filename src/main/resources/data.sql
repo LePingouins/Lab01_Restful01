@@ -34,3 +34,10 @@ VALUES
     ('e1b0748e-56d3-44e8-a4b2-543768c4669f', 'John', 'Doe', 'john.doe@example.com', 'standard', '123 Maple Street', 'Toronto', 'Ontario', 'Canada'),
     ('2b9c7b3f-df5a-4e0c-b827-82cf7b4d389d', 'Jane', 'Doe', 'jane.doe@example.com', 'premium', '456 Oak Avenue', 'Vancouver', 'British Columbia', 'Canada');
 
+
+
+-- Insérer des données dans la table libraries
+INSERT INTO libraries (library_id, name, address, max_capacity) VALUES
+                                                                    ('123e4567-e89b-12d3-a456-556642440000', 'Central Library', '123 Main St, Cityville', 500),
+                                                                    ('234e5678-f90c-23d4-b567-667753551111', 'Westside Library', '456 West St, Townsville', 300),
+                                                                    ('345e6789-g01d-34e5-c678-778864662222', 'East End Library', '789 East St, Villecity', 200);
