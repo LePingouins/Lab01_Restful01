@@ -3,8 +3,8 @@ CREATE TABLE IF NOT EXISTS books (
                                      book_id VARCHAR(255) NOT NULL UNIQUE, -- Assurez-vous que book_id est un VARCHAR et UNIQUE
                                      title VARCHAR(255) NOT NULL,
                                      author VARCHAR(255) NOT NULL,
-                                     genre VARCHAR(100),
-                                     isbn VARCHAR(13),
+                                     genre VARCHAR(100) NOT NULL,
+                                     isbn VARCHAR(13) NOT NULL,
                                      copie_available INT NOT NULL
 );
 

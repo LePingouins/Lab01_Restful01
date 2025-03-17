@@ -6,18 +6,6 @@ VALUES
     ('345e6789-g01d-34e5-c678-778864662222', 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', '9780061120084', 8),
     ('456e7890-h12e-45f6-d789-889975773333', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classics', '9780743273565', 4);
 
--- -- Insertion des options pour les livres
--- INSERT INTO options (book_id, name, description, cost)
--- VALUES
---     ('123e4567-e89b-12d3-a456-556642440000', 'Collector Edition', 'Includes leather cover and exclusive illustrations', 50.00),
---     ('123e4567-e89b-12d3-a456-556642440000', 'Signed by Author', 'Hand-signed copy by the author', 30.00),
---     ('234e5678-f90c-23d4-b567-667753551111', 'Limited Edition', 'Numbered copies with a special cover', 75.00),
---     ('234e5678-f90c-23d4-b567-667753551111', 'E-book Included', 'Comes with a digital version', 10.00),
---     ('345e6789-g01d-34e5-c678-778864662222', 'Hardcover Edition', 'Sturdy and elegant hardcover', 40.00),
---     ('345e6789-g01d-34e5-c678-778864662222', 'Audio Book', 'Narrated by a professional voice actor', 25.00),
---     ('456e7890-h12e-45f6-d789-889975773333', 'Premium Paper Quality', 'Printed on high-quality paper', 20.00),
---     ('456e7890-h12e-45f6-d789-889975773333', 'Special Gift Box', 'Comes in a collectible gift box', 35.00);
-
 INSERT INTO fines (fine_id, amount, reason, status) VALUES
           ('123e4567-e89b-12d3-a456-556642440000', 100.50, 'Late return', 'Pending'),
           ('234e5678-f90c-23d4-b567-667753551111', 250.00, 'Parking violation', 'Paid'),
