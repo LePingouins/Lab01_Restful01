@@ -50,27 +50,27 @@ public class BookServiceImpl implements BookService{
 
     @Override
     public BookResponseModel addBook(BookRequestModel newBookData) {
-        // Générer un identifiant unique si `bookId` est null ou vide
-        String bookId = (newBookData.getBookId() == null || newBookData.getBookId().isEmpty())
-                ? UUID.randomUUID().toString()
-                : newBookData.getBookId();
-
-        BookIdentifier bookIdentifier = new BookIdentifier(bookId);
-
-        // Vérifier si le livre existe déjà
-        Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookIdentifier);
-        if (foundBook != null) {
-            throw new IllegalArgumentException("Book with ID " + bookId + " already exists.");
+        // Validate the incoming data
+        if (newBookData.getIsbn() == null || newBookData.getIsbn().isEmpty()) {
+            throw new IllegalArgumentException("ISBN cannot be null or empty");
         }
 
-        // Mapper la requête vers une entité et lui affecter un identifiant
-        Book book = this.bookRequestMapper.requestModelToEntity(newBookData);
-        book.setBookIdentifier(bookIdentifier);
+        // Create a new Book entity from the request model
+        Book newBook = new Book();
+        newBook.setTitle(newBookData.getTitle());
+        newBook.setAuthor(newBookData.getAuthor());
+        newBook.setGenre(newBookData.getGenre());
+        newBook.setIsbn(newBookData.getIsbn()); // Set the ISBN
+        newBook.setCopieAvailable(newBookData.getCopyAvailable());
 
-        // Sauvegarder l'entité dans la base de données
-        Book savedBook = this.bookRepository.save(book);
+        // Create a new BookIdentifier and set it in the Book entity
+        BookIdentifier bookIdentifier = new BookIdentifier(); // This will generate a new UUID
+        newBook.setBookIdentifier(bookIdentifier); // Assuming your Book entity has a setBookIdentifier method
 
-        // Retourner la réponse
+        // Save the book to the repository
+        Book savedBook = this.bookRepository.save(newBook);
+
+        // Convert the saved book to a response model
         return this.bookResponseMapper.entityToResponseModel(savedBook);
     }
 

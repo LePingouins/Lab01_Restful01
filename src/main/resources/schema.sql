@@ -11,7 +11,6 @@ CREATE TABLE IF NOT EXISTS books (
 
 
 
-
 DROP TABLE IF EXISTS fines;
 
 CREATE TABLE fines (

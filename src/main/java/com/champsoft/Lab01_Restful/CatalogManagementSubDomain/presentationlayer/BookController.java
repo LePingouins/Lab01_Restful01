@@ -34,8 +34,17 @@ public ResponseEntity<BookResponseModel> getBookbyId(@PathVariable String book_i
 }
 
     @PostMapping()
-    public ResponseEntity<BookResponseModel> addBook(@RequestBody BookRequestModel newBookData){
-        return ResponseEntity.status(HttpStatus.CREATED).body(this.bookServiceImpl.addBook(newBookData));
+    public ResponseEntity<BookResponseModel> addBook(@RequestBody BookRequestModel newBookData) {
+        // Validate the incoming data (you can use a validation framework like Hibernate Validator)
+        if (newBookData.getTitle() == null || newBookData.getAuthor() == null) {
+            return ResponseEntity.badRequest().body(null); // Return a 400 Bad Request if validation fails
+        }
+
+        // Call the service to add the book
+        BookResponseModel createdBook = this.bookServiceImpl.addBook(newBookData);
+
+        // Return a 201 Created response with the created book data
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdBook);
     }
 
     @PutMapping("/{bookId}")

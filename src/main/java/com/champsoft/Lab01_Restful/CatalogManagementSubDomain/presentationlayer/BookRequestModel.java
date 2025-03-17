@@ -17,7 +17,7 @@ public class BookRequestModel {
      String author;
      String genre;
      String isbn;
-     int copieAvailable;
+     int copyAvailable;
 
 
 }
