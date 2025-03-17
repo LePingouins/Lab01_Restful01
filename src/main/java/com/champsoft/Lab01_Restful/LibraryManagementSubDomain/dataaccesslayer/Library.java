@@ -14,22 +14,24 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class Library {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "library_id", nullable = false, unique = true) // Unique identifier for the library
+    private String libraryId; // This should be a UUID or a unique string
 
+    private String name; // Name of the library
+    private String address; // Address of the library
+    private Integer maxCapacity; // Maximum capacity of the library
+
+    // One-to-many relationship with Librarian
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Librarian> librarians; // List of librarians associated with this library
+
+    // Embedded identifier for additional library identification details
     @Embedded
-    private LibraryIdentifier libraryIdentifier;
+    private LibraryIdentifier libraryIdentifier; // Ensure this is present if you want to use it
 
-    private String name;
-    private String address;
-    private Integer maxCapacity;
-
-    // Relation One-to-Many avec Book
+    // One-to-many relationship with Book
     @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Book> books;  // Ajout de la relation avec les livres
-
-    // Relation One-to-Many avec Librarian
-    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Librarian> librarians;
+    private List<Book> books; // List of books associated with this library
 }
