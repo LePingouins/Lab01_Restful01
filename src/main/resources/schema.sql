@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS books (
-                                     book_id VARCHAR(255) NOT NULL PRIMARY KEY,
+                                     id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                                     book_id VARCHAR(255) NOT NULL UNIQUE, -- Assurez-vous que book_id est un VARCHAR et UNIQUE
                                      title VARCHAR(255) NOT NULL,
                                      author VARCHAR(255) NOT NULL,
                                      genre VARCHAR(100),
@@ -9,7 +10,7 @@ CREATE TABLE IF NOT EXISTS books (
 
 CREATE TABLE IF NOT EXISTS options (
                                        id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                       book_id VARCHAR(255) NOT NULL,  -- Clé étrangère vers books
+                                       book_id VARCHAR(255) NOT NULL, -- Correspond à book_id dans books
                                        name VARCHAR(100),
                                        description TEXT,
                                        cost DECIMAL(19,2),
