@@ -8,14 +8,6 @@ CREATE TABLE IF NOT EXISTS books (
                                      copie_available INT NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS options (
-                                       id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY,
-                                       book_id VARCHAR(255) NOT NULL, -- Correspond à book_id dans books
-                                       name VARCHAR(100),
-                                       description TEXT,
-                                       cost DECIMAL(19,2),
-                                       FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE
-);
 
 
 
