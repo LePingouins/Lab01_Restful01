@@ -16,7 +16,6 @@ skinparam rectangle {
 
 Package "Library Management (Aggregate Root)" <<Rectangle>> #FFEB3B {
     AGGREGATE_ROOT(Library) #lightpink {
-
         name: String
         address: String
         maxCapacity: Integer
@@ -38,8 +37,9 @@ Package "Catalog Management Sub-Domain" <<Rectangle>> #D1C4E9 {
     VALUE_OBJECT(BookIdentifier) #Bisque {
         bookId: UUID
     }
-    BookIdentifier --> Library
-    Book --> BookIdentifier
+    BookIdentifier --> Book
+    Book --> LibraryIdentifier : "belongs to"
+    Library o-- "*" Book : "contains"
 }
 
 Package "Member Management Sub-Domain" <<Rectangle>> #E8F5E9 {
