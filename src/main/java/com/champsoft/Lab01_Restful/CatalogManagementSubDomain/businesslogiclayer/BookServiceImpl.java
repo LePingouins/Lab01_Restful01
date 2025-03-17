@@ -37,13 +37,9 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public BookResponseModel getBookbyId(String book_id){
-
-        // Crée un BookIdentifier avec le book_id
-        BookIdentifier bookIdentifier = new BookIdentifier(book_id);
-
-        // Recherche le livre en utilisant le BookIdentifier
-        Book book = this.bookRepository.findByBookIdentifier_BookId(bookIdentifier);
+    public BookResponseModel getBookbyId(String book_id) {
+        // Call the method that accepts a String
+        Book book = this.bookRepository.findByBookIdentifier_BookId(book_id);
 
         if (book == null) {
             throw new NotFoundException("Book with id: " + book_id + " not found.");
