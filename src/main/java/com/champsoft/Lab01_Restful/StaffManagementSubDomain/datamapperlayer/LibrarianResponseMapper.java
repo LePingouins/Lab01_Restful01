@@ -11,8 +11,11 @@ import java.util.List;
 public interface LibrarianResponseMapper {
 
     @Mapping(expression = "java(librarian.getLibrarianIdentifier().getLibrarianId())", target = "librarianId")
+    @Mapping(source = "library.libraryIdentifier.libraryId", target = "libraryId") // Ajout du lien avec Library
     LibrarianResponseModel entityToResponseModel(Librarian librarian);
 
     @Mapping(expression = "java(librarian.getLibrarianIdentifier().getLibrarianId())", target = "librarianId")
+    @Mapping(source = "library.libraryIdentifier.libraryId", target = "libraryId")
     List<LibrarianResponseModel> entityListToResponseModelList(List<Librarian> librarians);
 }
+

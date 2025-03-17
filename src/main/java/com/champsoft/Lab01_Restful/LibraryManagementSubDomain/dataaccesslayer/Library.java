@@ -1,9 +1,11 @@
 package com.champsoft.Lab01_Restful.LibraryManagementSubDomain.dataaccesslayer;
 
+import com.champsoft.Lab01_Restful.StaffManagementSubDomain.dataaccesslayer.Librarian;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Entity
 @Table(name="libraries")
@@ -23,4 +25,7 @@ public class Library {
     private String address;   // Adresse de la bibliothèque
     private Integer maxCapacity;  // Capacité maximale de la bibliothèque
 
+    // Relation One-to-Many avec Librarian
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Librarian> librarians;
 }
