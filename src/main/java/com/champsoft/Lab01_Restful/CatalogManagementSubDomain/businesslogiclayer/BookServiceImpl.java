@@ -75,25 +75,25 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
-    public BookResponseModel updateBook(String bookId, BookRequestModel newBookData){
-
-        // Crée un BookIdentifier à partir du bookId
-        BookIdentifier bookIdentifier = new BookIdentifier(bookId);
-
-        // Recherche du livre
-        Book foundBook = this.bookRepository.findByBookIdentifier_BookId(bookIdentifier);
-
-        if (foundBook == null){
+    public BookResponseModel updateBook(String bookId, BookRequestModel updatedBookData) {
+        // Find the existing book by its bookId
+        Book existingBook = this.bookRepository.findByBookIdentifier_BookId(bookId);
+        if (existingBook == null) {
             throw new NotFoundException("Book with id: " + bookId + " not found.");
-        } else {
-            // Mise à jour du livre
-            Book book = this.bookRequestMapper.requestModelToEntity(newBookData);
-            book.setBookIdentifier(bookIdentifier); // important
-            book.setId(foundBook.getId());  // Réassigner l'ID existant au livre
-
-            Book savedBook = this.bookRepository.save(book);
-            return this.bookResponseMapper.entityToResponseModel(savedBook);
         }
+
+        // Update the fields of the existing book
+        existingBook.setTitle(updatedBookData.getTitle());
+        existingBook.setAuthor(updatedBookData.getAuthor());
+        existingBook.setGenre(updatedBookData.getGenre());
+        existingBook.setIsbn(updatedBookData.getIsbn());
+        existingBook.setCopieAvailable(updatedBookData.getCopyAvailable());
+
+        // Save the updated book to the repository
+        Book savedBook = this.bookRepository.save(existingBook);
+
+        // Convert the saved book to a response model
+        return this.bookResponseMapper.entityToResponseModel(savedBook);
     }
 
     @Override
