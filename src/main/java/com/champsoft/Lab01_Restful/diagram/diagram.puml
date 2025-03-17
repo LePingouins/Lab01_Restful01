@@ -1,0 +1,80 @@
+@startuml
+hide circle
+top to bottom direction
+
+!define ENTITY(entityName) class entityName << Entity >>
+!define AGGREGATE(aggregateName) class aggregateName << Aggregate >>
+!define AGGREGATE_ROOT(aggregateRootName) class aggregateRootName << Aggregate Root >>
+!define VALUE_OBJECT(valueObjectName) class valueObjectName << Value Object >>
+!pragma useVerticalIf on
+skinparam dpi 350
+skinparam packageStyle rectangle
+skinparam rectangle {
+    BackgroundColor #f7f4eb
+    BorderColor Black
+}
+
+Package "Library Management (Aggregate Root)" <<Rectangle>> #FFEB3B {
+    AGGREGATE_ROOT(Library) #lightpink {
+        libraryId: UUID
+        name: String
+        address: String
+        maxCapacity: Integer
+    }
+    VALUE_OBJECT(LibraryIdentifier) #Bisque {
+        libraryId: UUID
+    }
+    LibraryIdentifier --> Library
+}
+
+Package "Catalog Management Sub-Domain" <<Rectangle>> #D1C4E9 {
+    ENTITY(Book) #lightblue {
+        title: String
+        author: String
+        genre: String
+        isbn: String
+        copiesAvailable: Integer
+    }
+    VALUE_OBJECT(BookIdentifier) #Bisque {
+        bookId: UUID
+    }
+    BookIdentifier --> Library
+    Book --> BookIdentifier
+}
+
+Package "Member Management Sub-Domain" <<Rectangle>> #E8F5E9 {
+    ENTITY(Member) #lightblue {
+        firstName: String
+        lastName: String
+        email: String
+        membershipType: String
+    }
+    VALUE_OBJECT(MemberIdentifier) #Bisque {
+        memberId: UUID
+    }
+    VALUE_OBJECT(MemberAddress) #Bisque {
+        street: String
+        city: String
+        province: String
+        country: String
+    }
+    MemberIdentifier --> Library
+    Member --> MemberIdentifier
+    Member o--> MemberAddress
+}
+
+Package "Staff Management Sub-Domain" <<Rectangle>> #3399FF {
+    ENTITY(Librarian) #lightblue {
+        firstName: String
+        lastName: String
+        email: String
+        salary: Decimal
+    }
+    VALUE_OBJECT(LibrarianIdentifier) #Bisque {
+        librarianId: UUID
+    }
+    LibrarianIdentifier --> Library
+    Librarian --> LibrarianIdentifier
+}
+
+@enduml
