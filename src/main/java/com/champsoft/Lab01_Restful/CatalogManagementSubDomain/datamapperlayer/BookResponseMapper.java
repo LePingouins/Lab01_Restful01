@@ -11,10 +11,10 @@ import java.util.List;
 public interface BookResponseMapper {
 
     @Mapping(expression = "java(book.getBookIdentifier().getBookId())", target = "bookId")
-   // @Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId") // Ajouter la relation Library
+    @Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId") // Lier la bibliothèque au modèle de réponse
     BookResponseModel entityToResponseModel(Book book);
 
     @Mapping(expression = "java(book.getBookIdentifier().getBookId())", target = "bookId")
-    //@Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId")
+    @Mapping(expression = "java(book.getLibrary().getLibraryIdentifier().getLibraryId())", target = "libraryId") // Lier la bibliothèque au modèle de réponse
     List<BookResponseModel> entityListToResponseModelList(List<Book> books);
 }

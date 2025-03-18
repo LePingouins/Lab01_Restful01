@@ -14,7 +14,6 @@ import java.util.UUID;
 
 public class BookIdentifier {
     @Column(name = "book_id")
-
     private String bookId;
 
     public BookIdentifier() {

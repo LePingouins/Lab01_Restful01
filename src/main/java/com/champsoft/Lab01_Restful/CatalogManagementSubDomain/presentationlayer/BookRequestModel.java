@@ -16,5 +16,5 @@ public class BookRequestModel {
      private String genre;
      private String isbn;
      private int copyAvailable;
-     //private String libraryId; // Identifiant de la bibliothèque associée
+     private String libraryId; // Identifiant de la bibliothèque associée
 }

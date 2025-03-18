@@ -1,9 +1,12 @@
 package com.champsoft.Lab01_Restful.LibraryManagementSubDomain.dataaccesslayer;
 
+import com.champsoft.Lab01_Restful.CatalogManagementSubDomain.dataaccesslayer.Book;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "libraries")
@@ -24,4 +27,8 @@ public class Library {
     private String city;
     private String state;
     private String postalCode;
+
+    // Relation One-to-Many avec Book
+    @OneToMany(mappedBy = "library", cascade = CascadeType.ALL)
+    private List<Book> books; // Liste des livres associés à la bibliothèque
 }
