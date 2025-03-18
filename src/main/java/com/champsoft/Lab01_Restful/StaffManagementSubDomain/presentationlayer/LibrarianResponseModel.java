@@ -15,5 +15,4 @@ public class LibrarianResponseModel {
     private String lastName;
     private String email;
     private Double salary;
-    private String libraryId; // Ajout de l'ID de la bibliothèque associée
 }

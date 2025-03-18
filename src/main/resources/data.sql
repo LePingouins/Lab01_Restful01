@@ -6,21 +6,20 @@ VALUES
     ('345e6789-g01d-34e5-c678-778864662222', 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', '9780061120084', 8),
     ('456e7890-h12e-45f6-d789-889975773333', 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classics', '9780743273565', 4);
 
-INSERT INTO fines (fine_id, amount, reason, status) VALUES
-          ('123e4567-e89b-12d3-a456-556642440000', 100.50, 'Late return', 'Pending'),
-          ('234e5678-f90c-23d4-b567-667753551111', 250.00, 'Parking violation', 'Paid'),
-          ('345e6789-g01d-34e5-c678-778864662222', 75.25, 'Overdue payment', 'Pending');
 
-
--- Insert data into loans table
-INSERT INTO loans (loan_id, issue_date, due_date, status)
+INSERT INTO libraries (library_id, name, address, city, state, postal_code)
 VALUES
-    ('LN1001', '2025-03-01 10:00:00', '2026-03-01 10:00:00', 'active'),
-    ('LN1002', '2025-04-15 09:30:00', '2026-04-15 09:30:00', 'active'),
-    ('LN1003', '2025-05-20 14:00:00', '2026-05-20 14:00:00', 'returned'),
-    ('LN1004', '2025-06-01 12:00:00', '2026-06-01 12:00:00', 'active'),
-    ('LN1005', '2025-07-10 16:00:00', '2026-07-10 16:00:00', 'active'),
-    ('LN1006', '2025-08-25 08:30:00', '2026-08-25 08:30:00', 'returned');
+    ('789e0123-i34f-56g7-h890-998877665544', 'Central Library', '123 Main St', 'Springfield', 'IL', '62701'),
+    ('890e1234-j45h-67i8-j901-109988776655', 'Westside Branch', '456 Elm St', 'Springfield', 'IL', '62702'),
+    ('901e2345-k56i-78j9-k012-210099887766', 'Eastside Branch', '789 Oak St', 'Springfield', 'IL', '62703'),
+    ('012e3456-l67j-89k0-l123-321001112233', 'Northgate Library', '101 Maple St', 'Springfield', 'IL', '62704');
+
+
+-- Insérer des bibliothécaires avec la relation vers les bibliothèques
+INSERT INTO librarians (librarian_id, first_name, last_name, email, salary) VALUES
+                                                                                            ('123e4567-e89b-12d3-a456-556642440000', 'Alice', 'Johnson', 'alice.johnson@example.com', 45000.00),
+                                                                                            ('234e5678-f90c-23d4-b567-667753551111', 'Bob', 'Smith', 'bob.smith@example.com', 50000.00),
+                                                                                            ('345e6789-g01d-34e5-c678-778864662222', 'Charlie', 'Brown', 'charlie.brown@example.com', 48000.00);
 
 
 -- Insertion de membres avec les informations d'adresse directement dans la table members

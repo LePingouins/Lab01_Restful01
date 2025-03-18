@@ -7,20 +7,18 @@ import lombok.Setter;
 
 import java.util.UUID;
 
-@Embeddable  // Indique que cette classe est un objet de valeur à être intégré dans d'autres entités
+@Embeddable
 @Getter
 @Setter
 public class LibraryIdentifier {
 
-    @Column(name = "library_id")
-    private String libraryId; // Identifiant unique pour la bibliothèque
+    @Column(name = "library_id") // ✅ Change "library_id" en "library_uuid"
+    private String libraryId;
 
-    // Le constructeur par défaut génère un nouvel UUID pour l'identifiant de la bibliothèque
     public LibraryIdentifier() {
         this.libraryId = UUID.randomUUID().toString();
     }
 
-    // Constructeur pour utiliser un identifiant de bibliothèque existant
     public LibraryIdentifier(String libraryId) {
         this.libraryId = libraryId;
     }

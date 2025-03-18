@@ -1,6 +1,5 @@
 package com.champsoft.Lab01_Restful.StaffManagementSubDomain.presentationlayer;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,5 +15,4 @@ public class LibrarianRequestModel {
     private String lastName;
     private String email;
     private Double salary;
-    private String libraryId; // Ajout de l'ID de la bibliothèque associée
 }

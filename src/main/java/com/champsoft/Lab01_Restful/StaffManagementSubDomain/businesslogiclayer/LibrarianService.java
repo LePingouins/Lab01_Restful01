@@ -6,9 +6,14 @@ import com.champsoft.Lab01_Restful.StaffManagementSubDomain.presentationlayer.Li
 import java.util.List;
 
 public interface LibrarianService {
+
     List<LibrarianResponseModel> getAllLibrarians();
+
     LibrarianResponseModel getLibrarianById(String librarianId);
+
     LibrarianResponseModel addLibrarian(LibrarianRequestModel newLibrarianData);
-    LibrarianResponseModel updateLibrarian(String librarianId, LibrarianRequestModel newLibrarianData);
+
+    LibrarianResponseModel updateLibrarian(String librarianId, LibrarianRequestModel updatedLibrarianData);
+
     String deleteLibrarianById(String librarianId);
 }

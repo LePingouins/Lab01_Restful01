@@ -71,8 +71,8 @@ public class BookServiceImpl implements BookService {
         newBook.setBookIdentifier(bookIdentifier); // Assuming your Book entity has a setBookIdentifier method
 
         // Set the library relationship
-        Library library = new Library();  // Ideally, you'd retrieve the library from the database based on the libraryId
-        newBook.setLibrary(library);
+       // Library library = new Library();  // Ideally, you'd retrieve the library from the database based on the libraryId
+        //newBook.setLibrary(library);
 
         // Save the book to the repository
         Book savedBook = this.bookRepository.save(newBook);

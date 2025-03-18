@@ -29,7 +29,7 @@ public class Book {
     private int copyAvailable;
 
     // Relation Many-to-One avec Library
-    @ManyToOne
-    @JoinColumn(name = "library_id", nullable = false) // Clé étrangère vers Library
-    private Library library; // La bibliothèque à laquelle appartient le livre
+   // @ManyToOne
+    //@JoinColumn(name = "library_id", nullable = false) // Clé étrangère vers Library
+    //private Library library; // La bibliothèque à laquelle appartient le livre
 }

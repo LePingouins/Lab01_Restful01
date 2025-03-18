@@ -9,6 +9,6 @@ import org.mapstruct.Mapping;
 public interface BookRequestMapper {
 
     // Conversion de BookRequestModel en Book (entité)
-    @Mapping(target = "library.id", source = "libraryId") // Mapping de libraryId pour lier la bibliothèque
+   // @Mapping(target = "library.libraryId", source = "libraryId")
     Book requestModelToEntity(BookRequestModel bookRequestModel);
 }

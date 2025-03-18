@@ -9,13 +9,10 @@ import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.
 import com.champsoft.Lab01_Restful.LibraryManagementSubDomain.presentationlayer.LibraryResponseModel;
 import com.champsoft.Lab01_Restful.utils.NotFoundException;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -31,73 +28,89 @@ public class LibraryServiceImpl implements LibraryService {
         this.libraryRequestMapper = libraryRequestMapper;
         this.libraryResponseMapper = libraryResponseMapper;
     }
-    @Transactional
+
+    @Override
     public List<LibraryResponseModel> getAllLibraries() {
+        // Retrieve all libraries from the repository
         List<Library> libraries = libraryRepository.findAll();
-        for (Library library : libraries) {
-            Hibernate.initialize(library.getLibrarians()); // Initialize the collection
-        }
+
+        // Convert the list of Library entities to LibraryResponseModel
         return libraryResponseMapper.entityListToResponseModelList(libraries);
     }
 
-    /*@Override
-    public List<LibraryResponseModel> getAllLibraries() {
-        List<Library> libraries = libraryRepository.findAll();
-        return libraryResponseMapper.entityListToResponseModelList(libraries);
-    }*/
-
     @Override
     public LibraryResponseModel getLibraryById(String libraryId) {
-        LibraryIdentifier libraryIdentifier = new LibraryIdentifier(libraryId);
-        Library library = this.libraryRepository.findLibraryByLibraryIdentifier(libraryIdentifier);
+        // Call the method that accepts a String
+        Library library = this.libraryRepository.findByLibraryIdentifier_LibraryId(libraryId);
+
         if (library == null) {
             throw new NotFoundException("Library with id: " + libraryId + " not found.");
+        } else {
+            return this.libraryResponseMapper.entityToResponseModel(library);
         }
-        return this.libraryResponseMapper.entityToResponseModel(library);
     }
 
     @Override
     public LibraryResponseModel addLibrary(LibraryRequestModel newLibraryData) {
-        String libraryId = (newLibraryData.getLibraryId() == null || newLibraryData.getLibraryId().isEmpty())
-                ? UUID.randomUUID().toString()
-                : newLibraryData.getLibraryId();
-
-        LibraryIdentifier libraryIdentifier = new LibraryIdentifier(libraryId);
-        Library foundLibrary = this.libraryRepository.findLibraryByLibraryIdentifier(libraryIdentifier);
-        if (foundLibrary != null) {
-            throw new IllegalArgumentException("Library with ID " + libraryId + " already exists.");
+        // Validate the incoming data
+        if (newLibraryData.getName() == null || newLibraryData.getName().isEmpty()) {
+            throw new IllegalArgumentException("Library name cannot be null or empty");
         }
 
-        Library library = this.libraryRequestMapper.requestModelToEntity(newLibraryData);
-        library.setLibraryIdentifier(libraryIdentifier);
-        Library savedLibrary = this.libraryRepository.save(library);
+        // Create a new Library entity from the request model
+        Library newLibrary = new Library();
+        newLibrary.setName(newLibraryData.getName());
+        newLibrary.setAddress(newLibraryData.getAddress());
+        newLibrary.setCity(newLibraryData.getCity());
+        newLibrary.setState(newLibraryData.getState());
+        newLibrary.setPostalCode(newLibraryData.getPostalCode());
+
+        // Create a new LibraryIdentifier and set it in the Library entity
+        LibraryIdentifier libraryIdentifier = new LibraryIdentifier(); // This will generate a new UUID
+        newLibrary.setLibraryIdentifier(libraryIdentifier); // Assuming your Library entity has a setLibraryIdentifier method
+
+        // Save the library to the repository
+        Library savedLibrary = this.libraryRepository.save(newLibrary);
+
+        // Convert the saved library to a response model
         return this.libraryResponseMapper.entityToResponseModel(savedLibrary);
     }
 
     @Override
-    public LibraryResponseModel updateLibrary(String libraryId, LibraryRequestModel newLibraryData) {
-        LibraryIdentifier libraryIdentifier = new LibraryIdentifier(libraryId);
-        Library foundLibrary = this.libraryRepository.findLibraryByLibraryIdentifier(libraryIdentifier);
-        if (foundLibrary == null) {
+    public LibraryResponseModel updateLibrary(String libraryId, LibraryRequestModel updatedLibraryData) {
+        // Find the existing library by its libraryId
+        Library existingLibrary = this.libraryRepository.findByLibraryIdentifier_LibraryId(libraryId);
+        if (existingLibrary == null) {
             throw new NotFoundException("Library with id: " + libraryId + " not found.");
         }
 
-        Library library = this.libraryRequestMapper.requestModelToEntity(newLibraryData);
-        library.setLibraryIdentifier(libraryIdentifier);
-        library.setLibraryId(foundLibrary.getLibraryId());
+        // Update the fields of the existing library
+        existingLibrary.setName(updatedLibraryData.getName());
+        existingLibrary.setAddress(updatedLibraryData.getAddress());
+        existingLibrary.setCity(updatedLibraryData.getCity());
+        existingLibrary.setState(updatedLibraryData.getState());
+        existingLibrary.setPostalCode(updatedLibraryData.getPostalCode());
 
-        Library savedLibrary = this.libraryRepository.save(library);
+        // Save the updated library to the repository
+        Library savedLibrary = this.libraryRepository.save(existingLibrary);
+
+        // Convert the saved library to a response model
         return this.libraryResponseMapper.entityToResponseModel(savedLibrary);
     }
 
     @Override
     public String deleteLibraryById(String libraryId) {
+        // Create a LibraryIdentifier from the libraryId
         LibraryIdentifier libraryIdentifier = new LibraryIdentifier(libraryId);
-        Library foundLibrary = this.libraryRepository.findLibraryByLibraryIdentifier(libraryIdentifier);
+
+        // Search for the library
+        Library foundLibrary = this.libraryRepository.findByLibraryIdentifier_LibraryId(libraryId);
+
         if (foundLibrary == null) {
             return "Library with id: " + libraryId + " not found.";
+        } else {
+            this.libraryRepository.delete(foundLibrary);
+            return "Library with id: " + libraryId + " deleted successfully.";
         }
-        this.libraryRepository.delete(foundLibrary);
-        return "Library with id: " + libraryId + " deleted successfully.";
     }
 }
